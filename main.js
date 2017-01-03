@@ -17,9 +17,16 @@ var Settings = function (url) {
 };
 
 var Drone = function (id, name, mac) {
-	this._id = id
+	this._id = id;
 	this.name = name;
 	this.mac = mac;
+};
+
+var DroneFile = function (id, date_loaded, date_first_record, date_last_record){
+        this.id = id;
+        this.date_loaded = date_loaded;
+        this.date_first_record = date_first_record;
+        this.date_last_record = date_last_record;
 };
 
 var dronesSettings = new Settings("/drones?format=json");
@@ -32,7 +39,7 @@ request(dronesSettings, function (error, response, dronesString) {
 	console.log(drones);
 	console.log("***************************************************************************");
 	drones.forEach(function (drone) {
-		var droneSettings = new Settings("/drones/" + drone.id + "?format=json");
+		var droneSettings = new Settings("/drones/" + drone.id);
 		request(droneSettings, function (error, response, droneString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
@@ -43,7 +50,7 @@ request(dronesSettings, function (error, response, dronesString) {
                             var fileDrone = new Settings ("/files/" + files.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
                             request(fileDrone, function (error, response, fileString){
                                 var files = JSON.parse(fileDrone);
-                                dal.insertFile(new File(files.id, files.date_loaded, files.date_first_record, files.date_last_record));
+                                dal.insertFile(new DroneFile(files.id, files.date_loaded, files.date_first_record, files.date_last_record));
                             });
                         });
 		});
