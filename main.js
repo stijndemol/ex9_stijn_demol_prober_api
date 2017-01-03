@@ -34,18 +34,18 @@ var dronesSettings = new Settings("/drones?format=json");
 dal.clearDrone();
 dal.clearFile();
 
-request(dronesSettings, function (error, response, dronesString) {
+request(dronesSettings, function (error, response, dronesString/*, fileString*/) {
 	var drones = JSON.parse(dronesString);
 	console.log(drones);
 	console.log("***************************************************************************");
 	drones.forEach(function (drone) {
 		var droneSettings = new Settings("/drones/" + drone.id);
-		request(droneSettings, function (error, response, droneString, file_string) {
+		request(droneSettings, function (error, response, droneString, fileString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
                         console.log(drone);
                         console.log("***************************************************************************");
-                        var drone_file = JSON.parse(file_String);
+                        var drone_file = JSON.parse(fileString);
                         
                         
                         drone_file.forEach(function (files){
