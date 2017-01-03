@@ -40,12 +40,12 @@ request(dronesSettings, function (error, response, dronesString) {
 	console.log("***************************************************************************");
 	drones.forEach(function (drone) {
 		var droneSettings = new Settings("/drones/" + drone.id);
-		request(droneSettings, function (error, response, droneString) {
+		request(droneSettings, function (error, response, droneString, file_string) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
                         console.log(drone);
                         console.log("***************************************************************************");
-                        var drone_file = JSON.parse(fileString);
+                        var drone_file = JSON.parse(file_String);
                         
                         
                         drone_file.forEach(function (files){
