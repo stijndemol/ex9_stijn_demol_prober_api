@@ -40,3 +40,57 @@ request(dronesSettings, function (error, response, dronesString) {
 });
 
 console.log("Hello World!");
+//
+//
+//            
+//            /* Below: Here, I add the url, what kind of method, the datatype in json (of course :) ), and the headers (like that password stuff etc.) to the code */
+//            var setup = function(url){
+//                this.url = url;
+//                this.method = "GET";
+//                this.datatype = "json";
+//                this.headers = {
+//                    "authorization" : "Basic aW1zOno1MTJtVDRKeVgwUExXZw=="
+//                };
+//            };
+//            
+//            /* Below: Here, I set the initiate file */
+//            var DroneSetup = new setup("https://web-ims.thomasmore.be/datadistribution/API/2.0/drones?format=json");
+//            $.ajax(DroneSetup).done(function(drones){
+//                
+//                drones.forEach(function(drones){ // for every drone that existed here
+//                    
+//                    var DroneDetailSetup = new setup("https://web-ims.thomasmore.be/datadistribution/API/2.0/drones/"+drones.id+"?format=json"); // I filter the file then on the id of the drone
+//                    $.ajax(DroneDetailSetup).done(function(droneDetails){
+//                        
+//                        var fileSetup = new setup("https://web-ims.thomasmore.be/datadistribution/API/2.0/files?drone_id.is="+droneDetails.id+"&format=json"); // but I want some more, so I added the details...
+//                        $.ajax(fileSetup).done(function(files){
+//                            
+//                            files.forEach(function(files){ // just like every drone (you can read the code on line 33), here I want every file
+//                                
+//                                var filesDetailSetup = new setup("https://web-ims.thomasmore.be/datadistribution/API/2.0/files/"+files.id+"?format=json");
+//                                
+//                                $.ajax(filesDetailSetup).done(function(fileDetails){
+//                                    // Below: I add the data that I've collected in the table that I've created below at the bottom of this file 
+//                                    $("#tabel").append('<tr>' +
+//                                            '<td>' + droneDetails.name + '</td>' +
+//                                            '<td>' + droneDetails.mac_address + '</td>' +
+//                                            '<td>' + files.id + '</td>' +
+//                                            '<td>' + fileDetails.date_first_record + '</td>' +
+//                                            '<td>' + fileDetails.date_last_record + '</td></tr>');
+//                                       
+//                                }).fail(function(){ // fail function n° 1
+//                                    
+//                                });
+//                            });
+//                        }).fail(function(){
+//                            alert('ERROR!!! Revise your code and try again!'); // fail function n° 2
+//                        });
+//                    }).fail(function(){
+//                        alert('ERROR!!! Revise your code and try again!'); // fail function n° 3
+//                    });
+//                });
+//            }).fail(function(){
+//                alert('ERROR!!! Revise your code and try again!'); // fail function n° 4
+//            });
+//            
+//            
