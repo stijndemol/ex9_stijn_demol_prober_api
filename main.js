@@ -23,11 +23,18 @@ var Drone = function (id, name, mac) {
 };
 
 var DroneFile = function (id, dateLoaded, dateFirstRecord, dateLastRecord){
-        this.id = id;
-        this.dateLoaded = dateLoaded;
-        this.dateFirstRecord = dateFirstRecord;
-        this.dateLastRecord = dateLastRecord;
+        this.Fileid = id;
+        this.FiledateLoaded = dateLoaded;
+        this.FiledateFirstRecord = dateFirstRecord;
+        this.FiledateLastRecord = dateLastRecord;
 };
+
+var DroneContent = function(id, mac, date, rssi){
+        this.Contentid = id;
+        this.Contentmac = mac;
+        this.Contentdate = date;
+        this.Contentrssi = rssi;
+}
 
 var dronesSettings = new Settings("/drones?format=json");
 
