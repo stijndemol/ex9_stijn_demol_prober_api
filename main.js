@@ -75,7 +75,9 @@ request(dronesSettings, function (error, response, dronesString) {
                         });
                         
                         
-                        
+            // Onderstaande code zijn probeersels die niet altijd hebben gewerkt, maar die ik er toch in zet als taken
+            // van wat ik allemaal heb geprobeerd.
+            
                         
                         
                         
