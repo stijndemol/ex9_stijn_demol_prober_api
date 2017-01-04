@@ -42,14 +42,14 @@ request(dronesSettings, function (error, response, dronesString) {
 	console.log("***************************************************************************");
 	drones.forEach(function (drone) {
 		var droneSettings = new Settings("/drones/" + drone.id + "?format=json");
-		request(droneSettings, function (error, response, droneString) {
+		request(droneSettings, function (error, response, droneString, filesString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
                         var files = JSON.parse(filesString);
                         
                         files.forEach(function (file){
                             var fileSettings = new droneSettings("/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
-                            request(fileSettings, function(error, response, filesString){
+                            request(fileSettings, function(error, response, fileString){
                                 var file = JSON.parse(fileString);
                                 dal.insertFile(new DroneFile(file.id, file.date_loaded, file.date_first_record, file.date_last_record));
                             });
