@@ -22,11 +22,11 @@ var Drone = function (id, name, mac) {
 	this.mac = mac;
 };
 
-var DroneFile = function (id, date_loaded, date_first_record, date_last_record){
-        this._id = id;
-        this.dateLoaded = date_loaded;
-        this.dateFirstRecord = date_first_record;
-        this.dateLastRecord = date_last_record;
+var DroneFile = function (id, dateLoaded, dateFirstRecord, dateLastRecord){
+        this.id = id;
+        this.dateLoaded = dateLoaded;
+        this.dateFirstRecord = dateFirstRecord;
+        this.dateLastRecord = dateLastRecord;
 };
 
 var dronesSettings = new Settings("/drones?format=json");
@@ -80,7 +80,7 @@ request(filesSettings, function (error, response, dronesString, filesString){
 //              var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
                 request(fileSettings, function (error, response, fileString){
                     var file = JSON.parse(fileString);
-                    dal.insertFile(new DroneFile(file.id, file.date_loaded, file.date_first_record, file.date_last_record));
+                    dal.insertFile(new DroneFile(file.id, file.dateLoaded, file.dateFirstRecord, file.dateLastRecord));
                 });
         });
 });
