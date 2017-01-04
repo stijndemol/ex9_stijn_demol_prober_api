@@ -46,6 +46,22 @@ var dal = {
 				db.close();
 			});
 		});
+	},
+        clearContent: function (call) {
+		this.connect(null, function (db) {
+			db.collection('contents').drop(function (err, result) {
+				//callback(result);
+				db.close();
+			});
+		})
+	},
+	inserContent: function (fileContent, callback) {
+		this.connect(null, function (db) {
+			db.collection('contents').insert(fileContent, function (err, result) {
+				//callback(result);
+				db.close();
+			});
+		});
 	}
         
 };
