@@ -63,7 +63,7 @@ request(dronesSettings, function (error, response, dronesString) {
 var filesSettings = new Settings("/drones&format=json");
 dal.clearFile();
 
-request(filesSettings, function (error, response, dronesString){
+request(filesSettings, function (error, response, dronesString, filesString){
         
         var drones = JSON.parse(dronesString)
         console.log(files);
