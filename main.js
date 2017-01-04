@@ -32,6 +32,7 @@ var DroneFile = function (id, dateLoaded, dateFirstRecord, dateLastRecord){
 var dronesSettings = new Settings("/drones?format=json");
 
 
+
 dal.clearDrone();
 
 
@@ -44,6 +45,28 @@ request(dronesSettings, function (error, response, dronesString) {
 		request(droneSettings, function (error, response, droneString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
+                        var files = JSON.parse(filesString);
+                        
+                        files.forEach(function (file){
+                            var fileSettings = new droneSettings("/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+                            request(fileSettings, function(error, response, filesString){
+                                var file = JSON.parse(fileString);
+                                dal.insertFile(new DroneFile(file.id, file.date_loaded, file.date_first_record, file.date_last_record));
+                            });
+                        });
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 //                       console.log(drone);
 //                        console.log("***************************************************************************");
 //                        var drone_file = JSON.parse(fileString);
@@ -60,31 +83,31 @@ request(dronesSettings, function (error, response, dronesString) {
 	});
 });
 
-var filesSettings = new Settings("/drones&format=json");
-dal.clearFile();
+//var filesSettings = new Settings("/drones&format=json");
+//dal.clearFile();
 
-request(filesSettings, function (error, response, dronesString, filesString){
-        
-        var drones = JSON.parse(dronesString)
-        console.log(files);
-        console.log("***************************************************************************");
-        console.log(drones);
-        console.log("***************************************************************************");
-        drones.forEach(function (drone) {
-		var droneSettings = new Settings("/drones/" + drone.id/* + "?format=json"*/);
-                var files = JSON.parse(filesString);
-                
-                files.forEach(function (files) {
-                    var fileSettings = new droneSettings("/files/" + files.id + "?format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
-                
-//                  var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
-                    request(fileSettings, function (error, response, fileString){
-                        var fileDrone = JSON.parse(fileString);
-                        dal.insertFile(new DroneFile(fileDrone.id, fileDrone.dateLoaded, fileDrone.dateFirstRecord, fileDrone.dateLastRecord));
-                    });
-                });
-        });
-});
+//request(filesSettings, function (error, response, dronesString, filesString){
+//        
+//        var drones = JSON.parse(dronesString)
+//        console.log(files);
+//        console.log("***************************************************************************");
+//        console.log(drones);
+//        console.log("***************************************************************************");
+//        drones.forEach(function (drone) {
+//		var droneSettings = new Settings("/drones/" + drone.id/* + "?format=json"*/);
+//                var files = JSON.parse(filesString);
+//                
+//                files.forEach(function (files) {
+//                    var fileSettings = new droneSettings("/files/" + files.id + "?format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+//                
+////                  var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+//                    request(fileSettings, function (error, response, fileString){
+//                        var fileDrone = JSON.parse(fileString);
+//                        dal.insertFile(new DroneFile(fileDrone.id, fileDrone.dateLoaded, fileDrone.dateFirstRecord, fileDrone.dateLastRecord));
+//                    });
+//                });
+//        });
+//});
   
   
 console.log("Hello World!");
