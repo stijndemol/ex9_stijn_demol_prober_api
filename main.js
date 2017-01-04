@@ -75,9 +75,9 @@ request(filesSettings, function (error, response, dronesString){
                 var files = JSON.parse(filesString);
                 
                 files.forEach(function (files) {
-		var fileSettings = new Settings("/files/" + files.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+		var fileSettings = new droneSettings("/files/" + files.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
                 
-//                var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+//              var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
                 request(fileSettings, function (error, response, fileString){
                     var file = JSON.parse(fileString);
                     dal.insertFile(new DroneFile(file.id, file.date_loaded, file.date_first_record, file.date_last_record));
@@ -88,7 +88,7 @@ request(filesSettings, function (error, response, dronesString){
   
   
 console.log("Hello World!");
-//
+/*//
 //
 //            
 //            /* Below: Here, I add the url, what kind of method, the datatype in json (of course :) ), and the headers (like that password stuff etc.) to the code */
@@ -141,4 +141,4 @@ console.log("Hello World!");
 //                alert('ERROR!!! Revise your code and try again!'); // fail function n° 4
 //            });
 //            
-//            
+//            */
