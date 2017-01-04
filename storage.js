@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
 var url = 'mongodb://localhost:27017/prober';
+var url2 = 'mongodb://localhost:27017/proberFiles'
 // mongo in nodeJs: http://mongodb.github.io/node-mongodb-native/2.2/
 // mongo API : http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html
 
