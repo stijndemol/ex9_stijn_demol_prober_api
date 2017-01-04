@@ -41,7 +41,7 @@ var dal = {
 	},
 	insertFile: function (drone, callback) {
 		this.connect(null, function (db) {
-			db.collection('files').insert(drone, function (err, result) {
+			db.collection('files').insert(file, function (err, result) {
 				//callback(result);
 				db.close();
 			});
