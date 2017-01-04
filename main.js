@@ -24,9 +24,9 @@ var Drone = function (id, name, mac) {
 
 var DroneFile = function (id, date_loaded, date_first_record, date_last_record){
         this._id = id;
-        this.date_loaded = date_loaded;
-        this.date_first_record = date_first_record;
-        this.date_last_record = date_last_record;
+        this.dateLoaded = date_loaded;
+        this.dateFirstRecord = date_first_record;
+        this.dateLastRecord = date_last_record;
 };
 
 var dronesSettings = new Settings("/drones?format=json");
@@ -35,16 +35,16 @@ var dronesSettings = new Settings("/drones?format=json");
 dal.clearDrone();
 
 
-request(dronesSettings, function (error, response, dronesString/*, fileString*/) {
+request(dronesSettings, function (error, response, dronesString) {
 	var drones = JSON.parse(dronesString);
 	console.log(drones);
 	console.log("***************************************************************************");
 	drones.forEach(function (drone) {
 		var droneSettings = new Settings("/drones/" + drone.id + "?format=json");
-		request(droneSettings, function (error, response, droneString/*, fileString*/) {
+		request(droneSettings, function (error, response, droneString) {
 			var drone = JSON.parse(droneString);
 			dal.insertDrone(new Drone(drone.id, drone.name, drone.mac_address));
-/*                       console.log(drone);
+//                       console.log(drone);
 //                        console.log("***************************************************************************");
 //                        var drone_file = JSON.parse(fileString);
 //                        
@@ -55,28 +55,35 @@ request(dronesSettings, function (error, response, dronesString/*, fileString*/)
 //                                var files = JSON.parse(fileDrone);
 //                                dal.insertFile(new DroneFile(files.id, files.date_loaded, files.date_first_record, files.date_last_record));
 //                            });
-//                        });*/
+//                        });
 		});
 	});
 });
 
-var filesSettings = new Settings("/drones&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+var filesSettings = new Settings("/drones&format=json");
 dal.clearFile();
 
-request(filesSettings, function (error, response, filesString, dronesString){
-        var files = JSON.parse(filesString);
+request(filesSettings, function (error, response, dronesString){
+        
         var drones = JSON.parse(dronesString)
         console.log(files);
         console.log("***************************************************************************");
         console.log(drones);
         console.log("***************************************************************************");
-        files.forEach(function (file, drone){
-                var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+        drones.forEach(function (drone) {
+		var droneSettings = new Settings("/drones/" + drone.id + "?format=json");
+                var files = JSON.parse(filesString);
+                
+                files.forEach(function (files) {
+		var fileSettings = new Settings("/files/" + files.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
+                
+//                var fileSettings = new Settings("/drones/" + drone.id + "/files/" + file.id + "&format=json&date_loaded.greaterOrEqual=2016-12-01T00:00:00");
                 request(fileSettings, function (error, response, fileString){
                     var file = JSON.parse(fileString);
                     dal.insertFile(new DroneFile(file.id, file.date_loaded, file.date_first_record, file.date_last_record));
-            });
+                });
         });
+});
 });
 
 console.log("Hello World!");
