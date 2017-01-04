@@ -71,7 +71,7 @@ request(filesSettings, function (error, response, dronesString){
         console.log(drones);
         console.log("***************************************************************************");
         drones.forEach(function (drone) {
-		var droneSettings = new Settings("/drones/" + drone.id + "?format=json");
+		var droneSettings = new Settings("/drones/" + drone.id/* + "?format=json"*/);
                 var files = JSON.parse(filesString);
                 
                 files.forEach(function (files) {
